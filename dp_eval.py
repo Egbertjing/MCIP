@@ -61,23 +61,23 @@ def main(args):
         decision = {}
         log(str(f"======== case: {i}\n"), args.log_path)
         for _ in range(args.generation_round):
-            # try:
+            try:
                 
-            decision, message = agents.complete(**item)
-            result = (CHOICE2INDEX[decision["decision"]] == LABEL2INDEX[label])
-            results.append(result)
-            acc = (sum(results) / len(results))
-            print(acc)
-            log(str(f"sample_id: {i} --- label:{label} --- result:{result} --- answer: {decision['decision']}\n"), args.log_path)
-            decision['prompt'] = message
-            log(str(decision)+"\n", args.log_path)
-            if decision: 
-                y_pred_bool.append(CHOICE2INDEX[decision["decision"]])
-                break
+                decision, message = agents.complete(**item)
+                result = (CHOICE2INDEX[decision["decision"]] == LABEL2INDEX[label])
+                results.append(result)
+                acc = (sum(results) / len(results))
+                print(acc)
+                log(str(f"sample_id: {i} --- label:{label} --- result:{result} --- answer: {decision['decision']}\n"), args.log_path)
+                decision['prompt'] = message
+                log(str(decision)+"\n", args.log_path)
+                if decision: 
+                    y_pred_bool.append(CHOICE2INDEX[decision["decision"]])
+                    break
 
-            # except Exception as e:
-            #     print(e)
-            #     continue
+            except Exception as e:
+                print(e)
+                continue
         if not decision: 
             y_pred_bool.append(-1)
             # results.append(-1)
